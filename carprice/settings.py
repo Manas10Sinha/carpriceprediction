@@ -27,7 +27,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["carpriceprediction23.herokuapp.com","localhost"]
+ALLOWED_HOSTS = ["carprice105.herokuapp.com","localhost"]
 
 
 
@@ -121,8 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
