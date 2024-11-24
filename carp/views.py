@@ -7,13 +7,30 @@ import sklearn
 from jupyter_console import app
 from sklearn.preprocessing import StandardScaler
 #app = Django(__name__)
-model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
-#@app.route('/',methods=['GET'])
-
+#model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
+model = pickle.load(open('decision_tree.pkl', 'rb'))
+#model = pickle.load(open('D:\ML Project/rg.pkl', 'rb'))
 def index(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
+#@app.route('/',methods=['GET'])
+'''
+import gdown
+
+file_id = "1Cd8y2riT1HpM1PUsWjOja7OJPjm3ZWmS"
+file_url = f"https://drive.google.com/uc?id={file_id}"
+output_path = "rg.pkl"  # Updated file name
+
+## Download the file
+gdown.download(file_url, output_path, quiet=False)
+
+## Load the .pkl file
+with open(output_path, 'rb') as file:
+    model = pickle.load(file)
+
+print("Data loaded from .pkl file:", model)
 
 
+'''
 standard_to = StandardScaler()
 #@app.route("/predict", methods=['POST'])
 
@@ -21,7 +38,7 @@ context ={
     'prediction_texts' : 0,
 }
 
-def predict(request):
+def predictt(request):
     print("Hello")
     Fuel_Type_Diesel=0
     if request.method == 'POST':
@@ -52,17 +69,20 @@ def predict(request):
             Transmission_Mannual=1
         else:
             Transmission_Mannual=0
+
         prediction=model.predict([[Present_Price,Kms_Driven2,Owner,Year,Fuel_Type_Diesel,Fuel_Type_Petrol,Seller_Type_Individual,Transmission_Mannual]])
+        #prediction = model.predict([[7,45000,1,6,1,0,0,1]])
+
         output=round(prediction[0],2)
         if output < 0:
             context['prediction_texts'] = "Sorry you cannot sell this car"
-            return redirect('/predict/')
+            return redirect('/predictt/')
         else:
             context['prediction_texts'] = "You Can Sell The Car at {}".format(output)
-            return redirect('/predict/')
+            return redirect('/predictt/')
     else:
         return render(request, 'index.html',context)
 
-if __name__=="__main__":
-    app.run(debug=True)
+#if __name__=="__main__":
+ #   app.run(debug=True)
 
