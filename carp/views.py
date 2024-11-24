@@ -15,7 +15,7 @@ def index(request):
 #@app.route('/',methods=['GET'])
 '''
 import gdown
-
+numpy==1.21.2
 file_id = "1Cd8y2riT1HpM1PUsWjOja7OJPjm3ZWmS"
 file_url = f"https://drive.google.com/uc?id={file_id}"
 output_path = "rg.pkl"  # Updated file name
