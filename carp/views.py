@@ -7,8 +7,8 @@ import sklearn
 from jupyter_console import app
 from sklearn.preprocessing import StandardScaler
 #app = Django(__name__)
-#model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
-model = pickle.load(open('decision_tree.pkl', 'rb'))
+model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
+#model = pickle.load(open('decision_tree.pkl', 'rb'))
 #model = pickle.load(open('D:\ML Project/rg.pkl', 'rb'))
 def index(request):
     return render(request, 'index.html')
