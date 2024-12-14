@@ -19,7 +19,7 @@ from carp import views
 
 urlpatterns = [
         path('admin/', admin.site.urls),
-        path('', views.index, name='index'),
+        path('/', views.index, name='index'),
         path('predictt/', views.predictt, name='predictt'),
         path('predictt/predictt/', views.predictt, name='predictt'),
 
