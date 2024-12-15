@@ -162,159 +162,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Price Prediction</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
+        /* Full-screen dark background with subtle texture */
         body {
-            background-image:  url('./mclaren.webp');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(145deg, #232526, #414345);
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            color: #ffffff;
+        }
+
+        .form-container {
+            background: #2a2a2a;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            width: 420px;
+            max-width: 90%;
+            text-align: center;
         }
 
         h2 {
-            font-size: 2rem;
-            margin-top: 20px;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            color: #00ffe1;
+            margin-bottom: 20px;
+            font-size: 26px;
         }
 
         h3 {
-            color: white;
-            font-size: 1rem;
-            text-align: left;
-            margin-left: 5%;
-        }
-
-        form {
-            margin: 50px auto;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
-            border-radius: 20px;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+            margin: 10px 0 5px;
         }
 
         input,
         select,
         button {
-            display: block;
-            width: 90%;
-            margin: 10px auto;
+            width: 100%;
             padding: 10px;
-            font-size: 1rem;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            outline: none;
-            transition: background-color 0.3s ease-in-out;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
         }
 
-        input:hover,
-        select:hover {
-            background-color: rgba(255, 255, 255, 0.8);
+        input,
+        select {
+            background: #444;
+            color: #fff;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 8px #00ffe1;
         }
 
         button {
-            background-color: darkcyan;
-            color: white;
-            cursor: pointer;
+            background: #00ffe1;
+            color: #333;
             font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: teal;
+            background: #00d3b9;
+            transform: translateY(-2px);
         }
 
-        /* Prediction Output */
-        .prediction-output {
+        .output-container {
             margin-top: 20px;
             padding: 15px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 2px solid #ffbf00;
+            background: #333;
             border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            display: none; /* Initially hidden */
+            color: #00ffe1;
+            text-align: left;
+            width: 400px;
+            position: relative;
+            left: 20px;
         }
 
-        .prediction-output h3 {
-            font-size: 1.2rem;
-            color: #333;
-            margin: 0;
+        /* Neon glow effect */
+        .form-container,
+        button:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 225, 0.8);
         }
-
     </style>
 </head>
 
 <body>
-    <div>
-        <!-- Form -->
+    <div class="form-container">
         <form action="predictt/" method="POST">
             {% csrf_token %}
-            <h2>Car Price Predictive Analysis</h2>
+            <h2>Car Price Prediction</h2>
             <h3>Year</h3>
-            <input id="first" name="Year" type="number" placeholder="Enter year of manufacture">
-            <h3>What is the Showroom Price? (In Lakhs)</h3>
-            <input id="second" name="Present_Price" placeholder="Enter price in lakhs" required>
-            <h3>How Many Kilometers Driven?</h3>
-            <input id="third" name="Kms_Driven" placeholder="Enter kilometers driven" required>
-            <h3>How many owners previously had the car (0, 1, or 3)?</h3>
-            <input id="fourth" name="Owner" placeholder="Enter previous owners" required>
-            <h3>What is the Fuel Type?</h3>
+            <input id="year" name="Year" type="number" placeholder="Enter the year" required>
+            <h3>Showroom Price (in lakhs)</h3>
+            <input id="price" name="Present_Price" type="number" placeholder="Enter the price" required>
+            <h3>Kilometers Driven</h3>
+            <input id="kms" name="Kms_Driven" type="number" placeholder="Enter kilometers driven" required>
+            <h3>Number of Previous Owners</h3>
+            <input id="owners" name="Owner" type="number" placeholder="Enter number of owners" required>
+            <h3>Fuel Type</h3>
             <select name="Fuel_Type_Petrol" id="fuel" required>
+                <option value="" disabled selected>Select Fuel Type</option>
                 <option value="Petrol">Petrol</option>
                 <option value="Diesel">Diesel</option>
                 <option value="CNG">CNG</option>
             </select>
-            <h3>Are you a Dealer or Individual?</h3>
-            <select name="Seller_Type_Individual" id="resea" required>
+            <h3>Seller Type</h3>
+            <select name="Seller_Type_Individual" id="seller" required>
+                <option value="" disabled selected>Select Seller Type</option>
                 <option value="Dealer">Dealer</option>
                 <option value="Individual">Individual</option>
             </select>
             <h3>Transmission Type</h3>
-            <select name="Transmission_Mannual" id="research" required>
-                <option value="Manual">Manual Car</option>
-                <option value="Automatic">Automatic Car</option>
+            <select name="Transmission_Mannual" id="transmission" required>
+                <option value="" disabled selected>Select Transmission</option>
+                <option value="Mannual">Manual</option>
+                <option value="Automatic">Automatic</option>
             </select>
-            <button id="sub" type="submit">Calculate the Selling Price</button>
+            <button id="submit" type="submit">Calculate Price</button>
         </form>
-
-        <!-- Prediction Output -->
-        <div class="prediction-output" id="output">
-            <h3>Prediction: {{ prediction_texts }}</h3>
-        </div>
     </div>
 
-    <script>
-        // GSAP animation for form elements
-        gsap.from("form", {
-            opacity: 0,
-            scale: 0.9,
-            duration: 1,
-            delay: 0.5,
-            ease: "power2.out"
-        });
-
-        gsap.from("h2, h3, input, select, button", {
-            opacity: 0,
-            y: 20,
-            stagger: 0.2,
-            duration: 1,
-            ease: "power2.out"
-        });
-
-        // Display prediction output (example for demo purposes)
-        document.querySelector("form").addEventListener("submit", function (e) {
-            e.preventDefault(); // Prevent form submission
-            const output = document.getElementById("output");
-            output.style.display = "block"; // Show prediction output
-            gsap.fromTo(output, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 1 });
-        });
-    </script>
+    <div class="output-container">
+        <h3>{{ prediction_texts }}</h3>
+    </div>
 </body>
 
 </html>
+
