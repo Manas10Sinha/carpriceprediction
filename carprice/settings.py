@@ -26,12 +26,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 #DEBUG = True
 DEBUG = os.environ.get("DEBUG" , "False").lower() == "true"
 
-#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 #ALLOWED_HOSTS = ["carprice105.herokuapp.com","localhost"]
 #ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 #ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
 #ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost carpriceprediction-1kya.onrender.com").split()
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost carpriceprediction-qg4b.onrender.com").split()
+#ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost carpriceprediction-qg4b.onrender.com").split()
 
 
 
